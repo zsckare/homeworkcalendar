@@ -15,7 +15,14 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-row *ngIf="!tareas">
+      <ion-col>Nada que mostrar</ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="tareas">
+      <ion-col>
+        
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

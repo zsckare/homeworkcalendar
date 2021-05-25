@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Profesores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="!profesores">
+    <ion-col style="text-align: center; padding-top: 10em;">
+      <h3>No tienes ningun profesor asignado</h3>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="profesores">
+    <ion-col>
+     <ion-list>
+     
+      <ion-item *ngFor="let data of profesores">
+        <ion-avatar slot="start">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{data.name}}</h2>
+          <h2>{{data.phone}}</h2>
+          <h3>{{data.mail}}</h3>
+        </ion-label>
+      </ion-item>
+     </ion-list>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/addprofesor']" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
