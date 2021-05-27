@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { DbService } from './../services/db.service';
 @Component({
   selector: 'app-addprofesor',
   templateUrl: './addprofesor.page.html',
@@ -7,7 +8,15 @@ import { NavController } from '@ionic/angular';
 })
 export class AddprofesorPage implements OnInit {
 
-  constructor(public navCtrl: NavController) { }
+
+  name: string;
+  phone: string;
+  email: string;
+
+  constructor(
+    public navCtrl: NavController,
+    private db: DbService,
+    ) { }
 
   ngOnInit() {
   }
@@ -15,7 +24,10 @@ export class AddprofesorPage implements OnInit {
 
   saveProfesor(){
 
+    this.db.addProfesor(this.name,this.phone,this.email).then((res)=>{    
+      this.navCtrl.pop()
+    })
 
-    this.navCtrl.pop()   
+    
   }
 }
