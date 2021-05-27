@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'addmateria',
     loadChildren: () => import('./addmateria/addmateria.module').then( m => m.AddmateriaPageModule)
+  },
+  {
+    path: 'addtarea',
+    loadChildren: () => import('./addtarea/addtarea.module').then( m => m.AddtareaPageModule)
   }
 ];
 

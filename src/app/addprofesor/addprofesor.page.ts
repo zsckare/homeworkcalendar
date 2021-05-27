@@ -23,11 +23,8 @@ export class AddprofesorPage implements OnInit {
 
 
   saveProfesor(){
-
     this.db.addProfesor(this.name,this.phone,this.email).then((res)=>{    
       this.navCtrl.pop()
-    })
-
-    
+    })    
   }
 }

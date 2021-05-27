@@ -20,5 +20,8 @@ CREATE TABLE IF NOT EXISTS todotable(
     notas TEXT
 );
 
-INSERT or IGNORE INTO profesortable(id, name,phone,email) VALUES (1, 'Yo mero', '6181234567','zsckare.pro@gmail.com');
-INSERT or IGNORE INTO profesortable(id, name,phone,email) VALUES (2, 'Tu mero', '6181234567','zsckare.pro@gmail.com');
+INSERT or IGNORE INTO profesortable(id, name,phone,email) VALUES (1, 'Test 1', '6181234567','test@gmail.com');
+INSERT or IGNORE INTO profesortable(id, name,phone,email) VALUES (2, 'Test 2', '6181234567','test@gmail.com');
+
+
+INSERT or IGNORE INTO materiatable(id, name,profesor) VALUES (1, 'Calculo diferencial', "Juan Perez");

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import {Profesor} from './profesor';
+import { Materia } from './materia';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class DbService {
   private storage: SQLiteObject;
   profesorList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  materiasList = new BehaviorSubject([]);
+  tareasList = new BehaviorSubject([]);
 
   constructor(
     private platform: Platform, 
@@ -41,6 +44,9 @@ export class DbService {
     return this.profesorList.asObservable();
   }
 
+  fetchMaterias(): Observable<Profesor[]> {
+    return this.materiasList.asObservable();
+  }
     // Render fake data
     getFakeData() {
       this.httpClient.get(
@@ -50,6 +56,7 @@ export class DbService {
         this.sqlPorter.importSqlToDb(this.storage, data)
           .then(_ => {
             this.getProfesores();
+            this.getMaterias();
             this.isDbReady.next(true);
           })
           .catch(error => console.error(error));
@@ -83,4 +90,20 @@ export class DbService {
     });
   }
  
+
+  getMaterias(){
+    return this.storage.executeSql('SELECT * FROM materiatable', []).then(res => {
+      let items: Materia[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) { 
+          items.push({ 
+            id: res.rows.item(i).id,
+            name: res.rows.item(i).name,  
+            profesor: res.rows.item(i).profesor,
+           });
+        }
+      }
+      this.materiasList.next(items);
+    });
+  }
 }
