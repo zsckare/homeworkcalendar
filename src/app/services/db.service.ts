@@ -6,6 +6,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import {Profesor} from './profesor';
 import { Materia } from './materia';
+import { Todo } from './todo';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class DbService {
   ) {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'positronx_db.db',
+        name: 'homeworkcalendar.db',
         location: 'default'
       })
       .then((db: SQLiteObject) => {
@@ -47,6 +48,9 @@ export class DbService {
   fetchMaterias(): Observable<Profesor[]> {
     return this.materiasList.asObservable();
   }
+  fetchTareas(): Observable<Profesor[]> {
+    return this.tareasList.asObservable();
+  }
     // Render fake data
     getFakeData() {
       this.httpClient.get(
@@ -57,6 +61,7 @@ export class DbService {
           .then(_ => {
             this.getProfesores();
             this.getMaterias();
+            this.getTareas();
             this.isDbReady.next(true);
           })
           .catch(error => console.error(error));
@@ -91,6 +96,38 @@ export class DbService {
   }
  
 
+  //---Tareas-----
+  
+  addTarea(title,materia,fecha,tipoTodo,notas,foto) {
+    let data = [title,materia,fecha,tipoTodo,notas,foto];
+    return this.storage.executeSql('INSERT INTO todotable (title,materia,fecha,tipoTodo,notas,foto) VALUES (?, ?,?,?,?,?)', data)
+    .then(res => {
+      this.getTareas();
+    });
+  }
+  getTareas(){
+    return this.storage.executeSql('SELECT * FROM todotable', []).then(res => {
+      let items: Todo[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) { 
+          items.push({ 
+            id: res.rows.item(i).id,
+            title: res.rows.item(i).title,  
+            materia: res.rows.item(i).materia,
+            fecha: res.rows.item(i).fecha,  
+            tipoTodo: res.rows.item(i).tipoTodo,   
+            notas: res.rows.item(i).notas,  
+            foto: res.rows.item(i).foto,  
+           });
+        }
+      }
+      this.tareasList.next(items);
+    });
+  }
+
+  //--Fin Tareas
+
+  // Materias
   getMaterias(){
     return this.storage.executeSql('SELECT * FROM materiatable', []).then(res => {
       let items: Materia[] = [];
@@ -106,4 +143,17 @@ export class DbService {
       this.materiasList.next(items);
     });
   }
+
+
+
+  deleteRegistro(tablename, id){
+    let sql = 'DELETE FROM '+tablename+ ' WHERE id = ?'
+    return this.storage.executeSql(sql, [id])
+    .then(_ => {
+      
+    });
+  }
+
+
+  //Fin materias
 }
