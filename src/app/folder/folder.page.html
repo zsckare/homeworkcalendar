@@ -28,9 +28,23 @@
     <ion-row *ngIf="tareas">
       <ion-col>
         <ion-list>
-          <ion-item *ngFor="let data of tareas" style="text-align: center;">
-            <ion-label>{{data.title}} || {{data.fecha | date:'shortDate'}} || {{data.materia}} </ion-label>
+          
+        <ion-item-sliding *ngFor="let data of tareas" style="text-align: center;" >
+          <ion-item (click)="verTarea(data)" >
+            <ion-label>{{data.title}} || {{data.fecha | date:'shortDate'}} || {{data.materia}} </ion-label>  
           </ion-item>
+          <ion-item-options>
+            <ion-item-option color="primary" (click)="editarTarea(data)">
+              <ion-icon name="pencil-outline"></ion-icon>
+              Editar
+            </ion-item-option>
+            <ion-item-option color="red" (click)="alertDelete(data.id)">
+              <ion-icon name="trash-outline"></ion-icon>
+              Eliminar
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      
         </ion-list>
 
       </ion-col>

@@ -94,13 +94,19 @@ export class DbService {
       this.getProfesores();
     });
   }
- 
+  editProfesor(id,name, phone, email) {
+    let data = [name, phone,email];
+    return this.storage.executeSql(`UPDATE profesortable SET name = ?, phone = ? ,email= ? WHERE id = ${id}`, data)
+    .then(res => {
+      this.getProfesores();
+    });
+  }
 
   //---Tareas-----
   
   addTarea(title,materia,fecha,tipoTodo,notas,foto) {
-    let data = [title,materia,fecha,tipoTodo,notas,foto];
-    return this.storage.executeSql('INSERT INTO todotable (title,materia,fecha,tipoTodo,notas,foto) VALUES (?, ?,?,?,?,?)', data)
+    let data = [title,materia,fecha,tipoTodo,notas,foto,1];
+    return this.storage.executeSql('INSERT INTO todotable (title,materia,fecha,tipoTodo,notas,foto,hecha) VALUES (?, ?,?,?,?,?,?)', data)
     .then(res => {
       this.getTareas();
     });
@@ -125,6 +131,14 @@ export class DbService {
     });
   }
 
+  setTareaHecha(id,value){
+    let data = [value];
+    return this.storage.executeSql(`UPDATE todotable SET hecha = ? WHERE id = ${id}`, data)
+    .then(res => {
+      this.getTareas();
+    });
+  }
+
   //--Fin Tareas
 
   // Materias
@@ -144,11 +158,25 @@ export class DbService {
     });
   }
 
+  addMateria(name, profesor){
+    let data = [name,profesor];
+    return this.storage.executeSql('INSERT INTO materiatable (name,profesor) VALUES (?, ?)', data)
+    .then(res => {
+      this.getMaterias();
+    });
+  }
+  editMateria(id,name,profesor){
+    let data = [name, profesor];
+    return this.storage.executeSql(`UPDATE materiatable SET name = ?, profesor = ?  WHERE id = ${id}`, data)
+    .then(res => {
+      this.getMaterias();
+    });
+  }
 
 
   deleteRegistro(tablename, id){
-    let sql = 'DELETE FROM '+tablename+ ' WHERE id = ?'
-    return this.storage.executeSql(sql, [id])
+
+    return this.storage.executeSql(`DELETE FROM ${tablename} WHERE id = ?`, [id])
     .then(_ => {
       
     });

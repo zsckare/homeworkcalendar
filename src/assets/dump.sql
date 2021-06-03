@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS todotable(
     fecha DATE,
     tipoTodo NUMERIC,    
     notas TEXT,
-    foto TEXT
+    foto TEXT,
+    hecha NUMERIC
 );
 
 INSERT or IGNORE INTO profesortable(id, name,phone,email) VALUES (1, 'Profesor 1', '6181234567','test@gmail.com');

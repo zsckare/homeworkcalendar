@@ -1,9 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>addmateria</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item>
+          <ion-label >Nombre Asignatura</ion-label>
+          <ion-input [(ngModel)]="name" ></ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label>Profesor</ion-label>
+          <ion-select placeholder="Seleccionar materia" [(ngModel)]="profesor">
+            <ion-select-option *ngFor="let data of profesores" value="{{data.name}}">{{data.name}}</ion-select-option>          
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="setAction()" >{{action}} </ion-button>
+        </ion-item>
+
+
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>

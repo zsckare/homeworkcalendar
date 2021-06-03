@@ -34,6 +34,22 @@ const routes: Routes = [
   {
     path: 'addtarea',
     loadChildren: () => import('./addtarea/addtarea.module').then( m => m.AddtareaPageModule)
+  },
+  {
+    path: 'editprofesor',
+    loadChildren: () => import('./editprofesor/editprofesor.module').then( m => m.EditprofesorPageModule)
+  },
+  {
+    path: 'ver-tarea',
+    loadChildren: () => import('./ver-tarea/ver-tarea.module').then( m => m.VerTareaPageModule)
+  },
+  {
+    path: 'addexamen',
+    loadChildren: () => import('./addexamen/addexamen.module').then( m => m.AddexamenPageModule)
+  },
+  {
+    path: 'edit-todo',
+    loadChildren: () => import('./edit-todo/edit-todo.module').then( m => m.EditTodoPageModule)
   }
 ];
 
