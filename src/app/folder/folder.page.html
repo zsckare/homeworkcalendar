@@ -30,8 +30,18 @@
         <ion-list>
           
         <ion-item-sliding *ngFor="let data of tareas" style="text-align: center;" >
-          <ion-item (click)="verTarea(data)" >
-            <ion-label>{{data.title}} || {{data.fecha | date:'shortDate'}} || {{data.materia}} </ion-label>  
+          <ion-item  >
+            <ion-row>
+              <ion-col size="10" (click)="verTarea(data)">
+                {{data.title}} || {{data.fecha | date:'shortDate'}} || {{data.materia}}
+              </ion-col>
+              <ion-col size="2">
+                <ion-checkbox checked="true" *ngIf="data.hecha !=1" (click)="checarHecha(data)" ></ion-checkbox>
+                <ion-checkbox checked="false" *ngIf="data.hecha ==1" (click)="checarHecha(data)"></ion-checkbox>
+
+              </ion-col>
+            </ion-row>
+            
           </ion-item>
           <ion-item-options>
             <ion-item-option color="primary" (click)="editarTarea(data)">
@@ -56,7 +66,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button ><ion-icon name="document-text-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button [routerLink]="['/addexamen']" ><ion-icon name="document-text-outline"></ion-icon></ion-fab-button>
       <ion-fab-button [routerLink]="['/addtarea']" ><ion-icon name="documents-outline"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>

@@ -27,7 +27,7 @@ export class DbService {
   ) {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'homeworkcalendar.db',
+        name: 'defaulthomework.db',
         location: 'default'
       })
       .then((db: SQLiteObject) => {
@@ -111,6 +111,22 @@ export class DbService {
       this.getTareas();
     });
   }
+
+  updateTarea(id,title,materia,fecha,notas,foto) {
+    let data = [title,materia,fecha,notas,foto];
+    return this.storage.executeSql(`UPDATE todotable SET title = ?,materia = ?,fecha = ?,notas = ?,foto = ? WHERE id = ${id}`, data)
+    .then(res => {
+      this.getTareas();
+    });
+  }
+  updateExamen(id,title,materia,fecha,notas) {
+    let data = [title,materia,fecha,notas];
+    return this.storage.executeSql(`UPDATE todotable SET title = ?,materia = ?,fecha = ?,notas = ? WHERE id = ${id}`, data)
+    .then(res => {
+      this.getTareas();
+    });
+  }
+
   getTareas(){
     return this.storage.executeSql('SELECT * FROM todotable', []).then(res => {
       let items: Todo[] = [];
@@ -124,12 +140,14 @@ export class DbService {
             tipoTodo: res.rows.item(i).tipoTodo,   
             notas: res.rows.item(i).notas,  
             foto: res.rows.item(i).foto,  
+            hecha: res.rows.item(i).hecha
            });
         }
       }
       this.tareasList.next(items);
     });
   }
+  
 
   setTareaHecha(id,value){
     let data = [value];

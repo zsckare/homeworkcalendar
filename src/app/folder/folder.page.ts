@@ -40,8 +40,38 @@ export class FolderPage implements OnInit {
     alert()
   }
   editarTarea(item){
-    alert("")
+    let navigationExtras: NavigationExtras = {
+      state: {
+        special: JSON.stringify(item)
+      }
+    };
+    console.log(navigationExtras)
+    this.router.navigate(['edit-todo'], navigationExtras);
   }
+  
+  checarHecha(item){
+    if(item.hecha == 1){
+      this.db.setTareaHecha(item.id,2).then((res)=>{
+        this.db.getTareas().then((res)=>{
+          this.db.fetchTareas().subscribe(item => {      
+            //console.log(item)
+            this.tareas  = item
+          })
+        })
+      })
+    }else{
+      this.db.setTareaHecha(item.id,1).then((res)=>{
+        this.db.getTareas().then((res)=>{
+          this.db.fetchTareas().subscribe(item => {      
+//            console.log(item)
+            this.tareas  = item
+          })
+        })
+      })
+    }
+  }
+
+
   async alertDelete(id){
     const alert = await this.alertController.create({
       

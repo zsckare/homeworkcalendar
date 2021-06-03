@@ -23,7 +23,7 @@ export class AddtareaPage implements OnInit {
      }
 
   ngOnInit() {
-
+    console.log("addtarea")
     this.db.dbState().subscribe((res) => {
       if(res){
         this.db.fetchMaterias().subscribe(item => {

@@ -43,9 +43,12 @@ export class AddexamenPage implements OnInit {
       this.foto = ""
     }
     this.db.addTarea(this.title,this.materia,this.fecha,2,this.notas,"").then((res)=>{
-      
+      this.db.getTareas().then((res)=>{
+        this.db.fetchTareas()
+        this.navCtrl.pop()
+      })
     })
-    this.navCtrl.pop()
+    
   }
 
 }

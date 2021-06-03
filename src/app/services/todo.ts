@@ -6,4 +6,5 @@ export class Todo {
     tipoTodo:string;
     notas:string;
     foto:string;
+    hecha:number;
 }
